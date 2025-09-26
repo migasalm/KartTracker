@@ -6,7 +6,7 @@ import KartCell from '../KartCell/KartCell.vue'
 const props = defineProps<{
   numberLanes: number
 }>()
-const { kartsInPitLane, numberOfKartsInPitLane, pitLaneLanes, kartRoster } = useKarts()
+const { kartsInPitLane, pitLaneLanes, kartRoster } = useKarts()
 
 const pitLaneRows = computed(() => {
   // Check the lanes of kartsInPitlane, find the lane with most karts, return that number
@@ -18,8 +18,9 @@ const pitLaneRows = computed(() => {
       maxKartsInLane = kartsInThisLane
     }
   }
+
   return maxKartsInLane < kartRoster.value.length / props.numberLanes
-    ? kartRoster.value.length / props.numberLanes
+    ? Math.ceil(kartRoster.value.length / props.numberLanes)
     : maxKartsInLane
 })
 
