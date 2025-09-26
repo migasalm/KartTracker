@@ -92,7 +92,7 @@ const toggleConfigLock = () => {
 
     <template v-if="isConfigLocked">
       <KartConfigurator v-if="selectedKartData" />
-      <TrackLane v-if="kartsOnTrack?.length" class="w-max mb-4" :karts="kartsOnTrack" />
+      <TrackLane v-if="kartsOnTrack?.length" class="w-max mb-4" />
       <PitLane
         v-if="kartRoster.length && pitLaneLanes"
         class="w-max"
