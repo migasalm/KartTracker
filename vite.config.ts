@@ -7,11 +7,7 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-<<<<<<< Updated upstream
-  base: './KartTracker/',
-=======
   base: 'KartTracker',
->>>>>>> Stashed changes
   plugins: [vue(), vueDevTools(), tailwindcss()],
   resolve: {
     alias: {
