@@ -1,31 +1,80 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import KartConfigurator from './components/KartConfigurator/KartConfigurator.vue'
+import PitLane from './components/PitLane/PitLane.vue'
+import TrackLane from './components/TrackLane/TrackLane.vue'
+import useKarts from './composables/useKarts'
+
+const {
+  kartsOnTrack,
+  kartRoster,
+  trackKarts,
+  pitLaneKarts,
+  pitLaneLanes,
+  selectedKartData,
+  kartsInPitLane,
+} = useKarts()
+</script>
 
 <template>
-  <h1 class="text-2xl font-bold">Race Information</h1>
-  <input type="number" id="on_track" name="on_track" required min="1" max="99"></input>
-  <div>
-  <label for="price" class="block text-sm/6 font-medium text-gray-900">Price</label>
-  <div class="mt-2">
-    <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
-      <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">$</div>
-      <input id="price" type="text" name="price" placeholder="0.00" class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" />
-      <div class="grid shrink-0 grid-cols-1 focus-within:relative">
-        <select id="currency" name="currency" aria-label="Currency" class="col-start-1 row-start-1 w-full appearance-none rounded-md py-1.5 pr-7 pl-3 text-base text-gray-500 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
-          <option>USD</option>
-          <option>CAD</option>
-          <option>EUR</option>
-        </select>
-        <svg viewBox="0 0 16 16" fill="currentColor" data-slot="icon" aria-hidden="true" class="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4">
-          <path d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" fill-rule="evenodd" />
-        </svg>
+  {{ kartsInPitLane }}
+  <div class="flex flex-col gap-4 p-4">
+    <h1 class="text-3xl font-bold text-white mb-4">Race Information</h1>
+    <div class="flex flex-row gap-4">
+      <div class="max-w-max mb-4">
+        <label
+          for="number-input"
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >How many karts on track:</label
+        >
+        <input
+          type="number"
+          id="number-input"
+          aria-describedby="helper-text-explanation"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          placeholder="0"
+          required
+          v-model="trackKarts"
+        />
+      </div>
+      <div class="max-w-max mb-4">
+        <label
+          for="number-input"
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >How many karts on pitlane:</label
+        >
+        <input
+          type="number"
+          id="number-input"
+          aria-describedby="helper-text-explanation"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          placeholder="0"
+          required
+          v-model="pitLaneKarts"
+        />
+      </div>
+      <div class="max-w-max mb-4">
+        <label
+          for="number-input"
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >How many lanes on pitlane:</label
+        >
+        <input
+          type="number"
+          id="number-input"
+          aria-describedby="helper-text-explanation"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          placeholder="0"
+          required
+          v-model="pitLaneLanes"
+        />
       </div>
     </div>
+    <div class="h-[1px] w-full bg-gray-300 dark:bg-gray-600 my-4"></div>
+
+    <KartConfigurator v-if="selectedKartData" />
+    <TrackLane v-if="kartsOnTrack.length" class="w-max mb-4" :karts="kartsOnTrack" />
+    <PitLane v-if="kartRoster.length && pitLaneLanes" class="w-max" :karts="kartsInPitlane" />
   </div>
-</div>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
 </template>
 
 <style scoped></style>
