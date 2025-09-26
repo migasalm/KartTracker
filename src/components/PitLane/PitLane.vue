@@ -44,7 +44,10 @@ const kartsPerLane = computed(() => {
           <div class="font-bold text-gray-900 dark:text-gray-100">Lane {{ lane }}</div>
         </div>
         <div v-for="row in pitLaneRows" :key="row" class="flex flex-col gap-">
-          <KartCell v-if="kartsPerLane[lane][row - 1]" :kartData="kartsPerLane[lane][row - 1]" />
+          <KartCell
+            v-if="kartsPerLane && kartsPerLane[lane] && kartsPerLane[lane][row - 1]"
+            :kartData="kartsPerLane[lane][row - 1]"
+          />
           <div
             v-else
             class="w-12 h-12 text-sm border border-dashed border-gray-400 rounded-lg text-gray-200 flex items-center justify-center"
